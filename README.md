@@ -1,2 +1,2 @@
 # Travel
-imooc学习项目，去哪儿类似
+imooc学习项目，类似去哪儿
