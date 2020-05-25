@@ -11,11 +11,11 @@
 
 <script>
 export default {
-  name: 'carrousel',
+  name: 'HomeSwiper',
   data () {
     return {
       swiperOptions: {
-        pagination: '.swiper-pagination',
+        pagination: '.swiper-pagination', // 传入显示分页div的class
         loop: true // 图片可以循环轮播
       },
       swiperList: [{
