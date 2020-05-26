@@ -21,25 +21,8 @@
 <script>
 export default {
   name: 'HomeRecommend',
-  data () {
-    return {
-      recommendList: [{
-        id: '001',
-        imgUrl: '//imgs.qunarzz.com/vs_ceph_vs_tts/edba950b-8ac8-4ebb-8502-b8dc8de4a85b.jpg_r_480x320x95_02b91d50.jpg',
-        title: '贵阳-铜仁 2天跟团游',
-        desc: '免票啦！高端纯玩♥含电瓶车，景点深度游，夜游舞阳河，梵净山/镇远古城2日游'
-      }, {
-        id: '002',
-        imgUrl: '//imgs.qunarzz.com/vs_ceph_vs_tts/cd9a66fd-d1af-48fa-91e1-6dd379846b14.jpg_r_480x320x95_4bb1c220.jpg',
-        title: '贵阳当地游 1天跟团游',
-        desc: '免票啦♥高端纯玩，不套路，真景点，荔波小七孔深度一日游'
-      }, {
-        id: '003',
-        imgUrl: '//imgs.qunarzz.com/vs_ceph_b2c_001/a0cd1637-2aa5-43bb-a4ce-d3fbb5c525ee.jpg_r_480x320x95_cb919e77.jpg',
-        title: '贵阳-贵州 2天跟团游',
-        desc: '【贵州西江千户苗寨+荔波小七孔2日游】住西江赏夜景，纯玩设计超长时间深度体验'
-      }]
-    }
+  props: {
+    recommendList: Array
   }
 }
 </script>
