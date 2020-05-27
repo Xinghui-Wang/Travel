@@ -35,6 +35,7 @@ export default {
   },
   methods: {
     handleCityClick (city) {
+      this.keyword = ''
       this.changeCity(city)
       this.$router.push('/')
     },
@@ -75,7 +76,9 @@ export default {
     }
   },
   mounted () {
-    this.scroll = new Bscroll(this.$refs.search)
+    this.scroll = new Bscroll(this.$refs.search, {
+      click: true
+    })
   }
 }
 </script>
