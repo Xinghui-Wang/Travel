@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <!-- 显示的是当前路由地址所对应的内容 -->
-    <router-view/>
+    <!-- keep-alive 路由中的内容被加载一次之后就放入内存，下次再进入此路由直接从内存中调用 -->
+    <keep-alive>
+      <!-- 显示的是当前路由地址所对应的内容 -->
+      <router-view/>
+    </keep-alive>
   </div>
 </template>
 
