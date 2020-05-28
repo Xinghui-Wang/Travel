@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     handleScroll () {
-      const top = document.documentElement.scrollTop
+      const top = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset // 兼容性处理
       if (top > 60) {
         let opacity = top / 140
         opacity = opacity > 1 ? 1 : opacity
@@ -45,10 +45,10 @@ export default {
       }
     }
   },
-  activated () { // 事件绑定在了window上，这就定义了一个全局事件，将会在后续中影响其他组件
+  mounted () { // 事件绑定在了window上，这就定义了一个全局事件，将会在后续中影响其他组件
     window.addEventListener('scroll', this.handleScroll)
   },
-  deactivated () { // 在离开此渲染页面时，将全局事件解绑
+  destroyed () { // 在离开此渲染页面时，将全局事件解绑
     window.removeEventListener('scroll', this.handleScroll)
   }
 }
