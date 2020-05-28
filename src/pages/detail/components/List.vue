@@ -2,7 +2,7 @@
   <ul>
     <li
       class="item"
-      v-for="(item, index) of list"
+      v-for="(item, index) of categoryList"
       :key="index"
     >
       <div class="item-title border-bottom">
@@ -10,7 +10,7 @@
         {{item.title}}
       </div>
       <div class="item-children" v-show="item.children">
-        <detail-list :list="item.children"></detail-list>
+        <detail-list :categoryList="item.children"></detail-list>
         <!-- 递归组件，自己通过name调用自己 -->
       </div>
     </li>
@@ -21,7 +21,7 @@
 export default {
   name: 'DetailList',
   props: {
-    list: Array
+    categoryList: Array
   }
 }
 </script>
