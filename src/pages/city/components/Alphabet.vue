@@ -6,10 +6,11 @@
       :key="item"
       :ref="item"
       @click="handleLetterClick"
-      @touchstart="handleTouchStart"
+      @touchstart.prevent="handleTouchStart"
       @touchmove="handleTouchMove"
       @touchend="handleTouchEnd"
     >{{item}}</li>
+    <!-- @touchstart.prevent 增加prevent阻止默认操作，解决真机测试不能滑动bug -->
   </ul>
 </template>
 
