@@ -20,9 +20,7 @@
 <script>
 export default {
   name: 'DetailList',
-  props: {
-    categoryList: Array
-  }
+  props: { categoryList: Array }
 }
 </script>
 

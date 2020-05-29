@@ -22,34 +22,36 @@
 </template>
 
 <script>
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 export default {
   name: 'DetailHeader',
-  data () {
-    return {
-      showAbs: true,
-      opacityStyle: {
-        opacity: 0
-      }
-    }
-  },
-  methods: {
-    handleScroll () {
+  setup () {
+    const showAbs = ref(true)
+    const opacityStyle = reactive({
+      opacity: 0
+    })
+
+    function handleScroll () {
       const top = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset // 兼容性处理
       if (top > 60) {
         let opacity = top / 140
         opacity = opacity > 1 ? 1 : opacity
-        this.opacityStyle = { opacity }
-        this.showAbs = false
+        opacityStyle.opacity = opacity
+        showAbs.value = false
       } else {
-        this.showAbs = true
+        showAbs.value = true
       }
     }
-  },
-  mounted () { // 事件绑定在了window上，这就定义了一个全局事件，将会在后续中影响其他组件
-    window.addEventListener('scroll', this.handleScroll)
-  },
-  destroyed () { // 在离开此渲染页面时，将全局事件解绑
-    window.removeEventListener('scroll', this.handleScroll)
+
+    onMounted (() => { // 事件绑定在了window上，这就定义了一个全局事件，将会在后续中影响其他组件
+      window.addEventListener('scroll', handleScroll)
+    })
+
+    onUnmounted (() => { // 在离开此渲染页面时，将全局事件解绑
+      window.removeEventListener('scroll', handleScroll)
+    })
+
+    return { showAbs, opacityStyle}
   }
 }
 </script>

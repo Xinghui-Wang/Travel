@@ -2,10 +2,10 @@
 <!-- 模版对外只能有一个标签 -->
   <div>
     <home-header></home-header>
-    <home-swiper :swiperList="data.swiperList"></home-swiper>
-    <home-icons :iconsList="data.iconsList"></home-icons>
-    <home-recommend :recommendList="data.recommendList"></home-recommend>
-    <home-weekend :weekendList="data.weekendList"></home-weekend>
+    <home-swiper :swiperList="swiperList"></home-swiper>
+    <home-icons :iconsList="iconsList"></home-icons>
+    <home-recommend :recommendList="recommendList"></home-recommend>
+    <home-weekend :weekendList="weekendList"></home-weekend>
   </div>
 </template>
 
@@ -18,7 +18,8 @@ import HomeRecommend from './components/Recommend'
 import HomeWeekend from './components/Weekend'
 import axios from 'axios'
 import { useStore } from 'vuex'
-import { reactive, computed, onMounted, onActivated } from 'vue'
+import { reactive, onMounted, ref } from 'vue'
+// reactive 修饰对象为响应式，ref 修饰数组/字符串...为响应式
 export default {
   name: 'Home',
   components: {
@@ -29,45 +30,34 @@ export default {
     HomeWeekend
   },
   setup () { // 组件初始化时执行一次
-    const data = reactive({
-      lastCity: '',
-      swiperList: [],
-      iconsList: [],
-      recommendList: [],
-      weekendList: []
-    })
+    // const data = reactive({ // 可通过定义data对象将数据存于其中，也可直接定义多个数据
+    //   swiperList: [],
+    //   iconsList: [],
+    //   recommendList: [],
+    //   weekendList: []
+    // })
+    const swiperList = ref([])
+    const iconsList = ref([])
+    const recommendList = ref([])
+    const weekendList = ref([])
     const store = useStore()
-    const city = computed(() => {
-      return store.state.city
-    })
-    function getHomeInfoSucc (res) {
+    // 直接通过.state取vuex里的数据
+    const city = store.state.city
+    async function getHomeInfo () {
+      let res = await axios.get('/api/index.json?city=' + city)
       res = res.data
       if (res.ret && res.data) {
         const result = res.data
-        data.swiperList = result.swiperList
-        data.iconsList = result.iconList
-        data.recommendList = result.recommendList
-        data.weekendList = result.weekendList
+        swiperList.value = result.swiperList // 单独定义ref时需要 .value 来更改数据，定义在data中则 data.swiperList
+        iconsList.value = result.iconList // 在html中使用时不需要 .value
+        recommendList.value = result.recommendList
+        weekendList.value = result.weekendList
       }
-    }
-    function getHomeInfo () {
-      axios.get('/api/index.json?city=' + city.value)
-        .then(getHomeInfoSucc)
     }
     onMounted (() => {
-      console.log(1)
-      data.lastCity = city
       getHomeInfo()
     })
-    onActivated (() => { // 使用keep-alive标签时独有的生命周期函数，在每次页面重新渲染时调用
-      if (this.lastCity !== this.city) { // 优化性能，当本次城市与上次不一致时才需要重新用ajax请求数据
-        data.lastCity = city
-        getHomeInfo()
-      }
-    })
-    return {
-      data
-    }
+    return { swiperList, iconsList, recommendList, weekendList }
   }
 }
 </script>

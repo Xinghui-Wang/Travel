@@ -27,58 +27,60 @@
 
 <script>
 import Bscroll from 'better-scroll'
-import { mapMutations } from 'vuex'
+import { useStore } from 'vuex'
+import { ref, computed, watch, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 export default {
   name: 'CitySearch',
   props: {
     cities: Object
   },
-  methods: {
-    handleCityClick (city) {
-      this.keyword = ''
-      this.changeCity(city)
-      this.$router.push('/')
-    },
-    ...mapMutations(['changeCity'])
-  },
-  data () {
-    return {
-      keyword: '',
-      list: [],
-      timer: null
-    }
-  },
-  computed: {
-    hasNoData () {
-      return !this.list.length
-    }
-  },
-  watch: {
-    keyword () {
-      if (this.timer) {
-        clearTimeout(this.timer)
+  setup (props) {
+    const keyword = ref('')
+    const list = ref([])
+    let timer = null
+
+    const hasNoData = computed (() => {
+      return !list.value.length
+    })
+    
+    watch (keyword, (keyword, prevKeyword) => {
+      if (timer) {
+        clearTimeout(timer)
+        timer = null
       }
-      if (!this.keyword) {
-        this.list = []
+      if (!keyword) {
+        list.value = []
         return
       }
-      this.timer = setTimeout(() => {
+      timer = setTimeout(() => {
         const result = []
-        for (let i in this.cities) {
-          this.cities[i].forEach((value) => {
-            if (value.spell.indexOf(this.keyword) > -1 || value.name.indexOf(this.keyword) > -1) {
+        for (let i in props.cities) {
+          props.cities[i].forEach((value) => {
+            if (value.spell.indexOf(keyword) > -1 || value.name.indexOf(keyword) > -1) {
               result.push(value)
             }
           })
         }
-        this.list = result
+        list.value = result
       }, 100)
-    }
-  },
-  mounted () {
-    this.scroll = new Bscroll(this.$refs.search, {
-      click: true
     })
+
+    const store = useStore()
+    const router = useRouter()
+    function handleCityClick (city) {
+      store.commit('changeCity', city)
+      router.push('/')
+    }
+    
+    const search = ref(null)
+    onMounted (() => {
+      new Bscroll(search.value, {
+        click: true
+      })
+    })
+
+    return { keyword, list, hasNoData, search, handleCityClick }
   }
 }
 </script>

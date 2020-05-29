@@ -18,22 +18,17 @@
 </template>
 
 <script>
+import { computed } from 'vue'
 export default {
   name: 'HomeIcons',
-  props: {
-    iconsList: Array
-  },
-  data () {
-    return {
-      swiperOptions: {
-        autoplay: false // swiper不自动滚动
-      }
+  props: { iconsList: Array },
+  setup (props) {
+    const swiperOptions = {
+      autoplay: false // swiper不自动滚动
     }
-  },
-  computed: {
-    pages () {
+    const pages = computed(() => {
       const pages = []
-      this.iconsList.forEach((item, index) => {
+      props.iconsList.forEach((item, index) => {
         const page = Math.floor(index / 8)
         if (!pages[page]) {
           pages[page] = []
@@ -41,7 +36,8 @@ export default {
         pages[page].push(item)
       })
       return pages
-    }
+    })
+    return { swiperOptions, pages }
   }
 }
 </script>

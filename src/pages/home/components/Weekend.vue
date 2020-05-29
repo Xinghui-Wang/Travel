@@ -22,9 +22,7 @@
 <script>
 export default {
   name: 'HomeWeekend',
-  props: {
-    weekendList: Array
-  }
+  props: { weekendList: Array }
 }
 </script>
 

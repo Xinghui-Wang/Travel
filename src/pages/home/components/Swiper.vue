@@ -10,24 +10,22 @@
 </template>
 
 <script>
+import { computed } from 'vue'
 export default {
   name: 'HomeSwiper',
-  props: {
-    swiperList: Array
-  },
-  data () {
-    return {
-      swiperOptions: {
-        pagination: '.swiper-pagination', // 传入显示分页div的class
-        loop: true // 图片可以循环轮播
-      }
+  props: { swiperList: Array },
+  setup (props) {
+    const swiperOptions = {
+      pagination: {
+        el: '.swiper-pagination'  // 传入显示分页div的class
+      },
+      loop: true // 图片可以循环轮播
     }
-  },
-  computed: {
-    showSwiper () {
-      return this.swiperList.length
+    const showSwiper = computed(() => {
+      return props.swiperList.length
       // v-if使得接收到数据后(len不为0)再创建swiper组件，避免渲染出的首页图片是列表中的最后一个元素
-    }
+    })
+    return { swiperOptions, showSwiper }
   }
 }
 </script>
