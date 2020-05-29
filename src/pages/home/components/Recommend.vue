@@ -55,6 +55,7 @@ export default {
       .item-title
         line-height .54rem
         font-size .32rem
+        color #666666
         ellipsis()
       .item-desc
         line-height .4rem

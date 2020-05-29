@@ -28,7 +28,7 @@ export default {
     }
   },
   updated () {
-    this.startY = this.$refs['A'][0].offsetTop
+    this.startY = this.$refs['A'].offsetTop
   },
   computed: {
     // eslint-disable-next-line vue/return-in-computed-property

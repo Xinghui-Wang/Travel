@@ -10,7 +10,7 @@
     <router-link to="/city">
       <!-- router-link一个跳转内置组件 -->
       <div class="header-right">
-        {{this.city}}
+        {{city}}
         <span class="iconfont iconsj-shang arrow-icon"></span>
       </div>
     </router-link>
