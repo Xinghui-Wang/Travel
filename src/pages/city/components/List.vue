@@ -67,7 +67,7 @@ export default {
     }
 
     const elems = ref({})
-    // const sroll = null
+    const scroll = null
     watch (() => props.letter, (letter, prevLetter) => {
       if (letter && scroll) {
         const element = elems.value[letter]

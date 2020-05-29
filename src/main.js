@@ -7,7 +7,7 @@ import 'babel-polyfill'
 import 'styles/reset.css'
 import 'styles/border.css'
 import 'styles/iconfont/iconfont.css'
-import 'swiper/dist/css/swiper.css'
+import 'swiper/css/swiper.css'
 
 createApp(App).use(router).use(store).use(VueAwesomeSwiper).mount('#app')
 

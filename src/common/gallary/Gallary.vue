@@ -28,7 +28,9 @@ export default {
   data () {
     return {
       swiperOptions: {
-        pagination: '.swiper-pagination',
+        pagination: {
+          el: '.swiper-pagination'
+        },
         paginationType: 'fraction',
         observer: true, // 检测到自己有DOM变化就重新刷新一次
         observeParents: true // 检测到父元素有DOM变化就重新刷新一次
